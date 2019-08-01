@@ -11,6 +11,30 @@
 |
 */
 
+use App\User;
+//use Carbon\Carbon;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
+
+
+
+
+
+
+
+
+
+
+
+Route::resource('users', 'AdminUsersController');
+
+//Route::get('admin/users', function() {
+//
+//    return view('admin.users.index', compact('users'));
+//});
+
