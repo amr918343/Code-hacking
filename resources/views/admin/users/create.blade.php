@@ -20,9 +20,9 @@
 
         <div class='form-group col-xs-5'>
 
-            {!! Form::label('image', 'Choose Image') !!}
+            {!! Form::label('photo_id', 'Choose Image') !!}
 
-            {!! Form::file('image', ['class' => 'form-control']) !!}
+            {!! Form::file('photo_id', ['class' => 'form-control']) !!}
 
         </div>
 

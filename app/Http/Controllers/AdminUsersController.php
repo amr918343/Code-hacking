@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Photo;
 use App\User;
 use App\Http\Requests\UserRequest;
 use App\Role;
@@ -52,9 +53,19 @@ class AdminUsersController extends Controller
                 'password' => 'required',
 
         ]);
-        User::create($request->all());
+
+        $input = $request->all();
+
+        if($file = $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['path' => $name]);
+            $input['photo_id'] = $photo->id;
+        }
+//
+        $input['password'] = bcrypt($request->password);
+        User::create($input);
         return redirect('/users');
-//        return $request->all();
     }
 
     /**
@@ -77,6 +88,11 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         //
+        $roles = Role::lists('name', 'id')->all();
+        $user = User::find($id);
+
+        return view('admin.users.edit',compact('user', 'roles'));
+
     }
 
     /**
@@ -89,6 +105,30 @@ class AdminUsersController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $this->validate($request,[
+
+            'name' => 'required',
+            'email' => 'required',
+            'is_active' => 'required',
+            'role_id' => 'required',
+
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $input = $request->all();
+
+        if($file = $request->file('photo_id')) {
+            $name = time() . $file->getClientOriginalName();
+            $file->move('images', $name);
+            $photo = Photo::create(['path' => $name]);
+            $input['photo_id'] = $photo->id;
+        }
+
+        $user->update($input);
+
+        return redirect('users');
     }
 
     /**
