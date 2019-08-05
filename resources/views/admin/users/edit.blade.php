@@ -8,25 +8,13 @@
         </div>
 
         <div class="col-xs-10">
-            <div class="row">
-                <div class="col-xs-5">
-                    @if(count($errors) > 0)
-                        <ul class="error-list">
-                            <div class="alert alert-danger">
-                                @foreach($errors->all() as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </div>
-                        </ul>
-                    @endif
-                </div>
-            </div>
+            @include('includes.errors')
             {!! Form::model($user,['method' => 'patch', 'action' => ['AdminUsersController@update', $user->id],'files' => true]) !!}
             <div class="row">
-                {{csrf_token()}}
+                {{form::token()}}
                 <div class='form-group col-xs-5'>
 
-                    {!! Form::label('username', 'User name') !!}
+                    {!! Form::label('name', 'User name') !!}
 
                     {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Type User name']) !!}
 
@@ -62,7 +50,7 @@
 
                 <div class='form-group col-xs-5'>
 
-                    {!! Form::label('status', 'Status') !!}
+                    {!! Form::label('is_active', 'Status') !!}
 
                     {!! Form::select('is_active', [0 => 'Idle', 1 => 'Active'], null, ['class' => 'form-control', 'placeholder' => 'Type Status']) !!}
 
@@ -74,7 +62,7 @@
 
                 <div class='form-group col-xs-5'>
 
-                    {!! Form::label('role', 'Role') !!}
+                    {!! Form::label('role_id', 'Role') !!}
 
                     {!! Form::select('role_id', $roles, null, ['class' => 'form-control', 'placeholder' => 'Type Role']) !!}
 
@@ -88,7 +76,7 @@
                 <div class='form-group col-xs-5'>
 
 
-                    {!! Form::label('Password', 'password'); !!}
+                    {!! Form::label('password', 'password'); !!}
                     {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Type Password']) !!}
 
                 </div>
@@ -104,4 +92,9 @@
             {!! Form::close() !!}
         </div>
     </div>
+    {!! Form::open(['method' => 'delete', 'action' => ['AdminUsersController@destroy', $user->id]]) !!}
+        <div class='form-group'>
+            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+        </div>
+    {!! Form::close() !!}
 @stop

@@ -20,8 +20,8 @@
 
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td><a href="{{route('users.edit', $user->id)}}">{{$user->name}}</a></td>
-                    <td><img height='50' width="50" src="{{$user->photo ? $user->photo->path : 'No user photo here'}}" alt="personal Image"></td>
+                    <td><a href="{{route('admin.users.edit', $user->id)}}">{{$user->name}}</a></td>
+                    <td><img height='50' width="50" src="{{$user->photo ? $user->photo->path : 'http://placehold.it/50x50'}}" alt="personal Image"></td>
                     <td>{{$user->email}}</td>
                     @if($user->role->name == 'Administrator')
                         <td style="color:red">{{$user->role->name}}</td>

@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property mixed role
+ */
 class User extends Authenticatable
 {
     /**
@@ -25,11 +28,21 @@ class User extends Authenticatable
     ];
 
     public function role() {
-        return $this->belongsTo('App\Role');
+        return $this->belongsTo('App\Role', 'role_id');
     }
 
 
     public function photo() {
-        return $this->belongsTo('App\Photo');
+        return $this->belongsTo('App\Photo', 'photo_id');
+    }
+
+    public function isAdmin() {
+        if($this->role->name == 'admin')
+            return true;
+        return false;
+    }
+// Relations
+    public function posts() {
+        return $this->hasMany('App\Post');
     }
 }

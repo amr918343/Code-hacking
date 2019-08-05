@@ -11,6 +11,12 @@ class Photo extends Model
     protected $fillable = ['path'];
 
     public function getPathAttribute($val) {
-        return $this->image . $val;
+        return $this->image . $val ? $this->image . $val : null;
+    }
+
+    //    Relations
+
+    public function posts() {
+        return $this->hasMany('App\Post');
     }
 }

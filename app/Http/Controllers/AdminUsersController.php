@@ -47,7 +47,7 @@ class AdminUsersController extends Controller
         $this->validate($request, [
 
                 'name' => 'required',
-                'email' => 'required',
+                'email' => 'required|unique:users',
                 'is_active' => 'required',
                 'role_id' => 'required',
                 'password' => 'required',
@@ -65,7 +65,7 @@ class AdminUsersController extends Controller
 //
         $input['password'] = bcrypt($request->password);
         User::create($input);
-        return redirect('/users');
+        return redirect('admin/users');
     }
 
     /**
@@ -106,18 +106,24 @@ class AdminUsersController extends Controller
     {
         //
 
+        if($request->password == '') {
+            $input = $request->except('password');
+        } else {
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        }
+
         $this->validate($request,[
 
-            'name' => 'required',
+            'name' => 'required|max:10',
             'email' => 'required',
             'is_active' => 'required',
             'role_id' => 'required',
+            'password' => 'sometimes|min:8|max:50',
 
         ]);
 
         $user = User::findOrFail($id);
-
-        $input = $request->all();
 
         if($file = $request->file('photo_id')) {
             $name = time() . $file->getClientOriginalName();
@@ -128,7 +134,7 @@ class AdminUsersController extends Controller
 
         $user->update($input);
 
-        return redirect('users');
+        return redirect('admin/users');
     }
 
     /**
@@ -140,5 +146,13 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+
+        if(isset($user->photo_id)) {
+            unlink(ltrim($user->photo->path, '/'));
+        }
+
+        $user->delete();
+        return redirect('admin/users');
     }
 }

@@ -1,13 +1,18 @@
 @extends('layouts.admin')
 @section('content')
     <h1>Create Users</h1>
+
+
+    @include('includes.errors')
+
+
     {!! Form::open(['method' => 'post', 'action' => 'AdminUsersController@store','files' => true] ) !!}
 
     <div class="row">
 
         <div class='form-group col-xs-5'>
 
-            {!! Form::label('username', 'User name') !!}
+            {!! Form::label('name', 'User name') !!}
 
             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Type User name']) !!}
 
@@ -22,7 +27,7 @@
 
             {!! Form::label('photo_id', 'Choose Image') !!}
 
-            {!! Form::file('photo_id', ['class' => 'form-control']) !!}
+            {!! Form::file('photo_id', null, ['class' => 'form-control']) !!}
 
         </div>
 
@@ -44,7 +49,7 @@
 
         <div class='form-group col-xs-5'>
 
-            {!! Form::label('status', 'Status') !!}
+            {!! Form::label('is_active', 'Status') !!}
 
             {!! Form::select('is_active', [0 => 'Idle', 1 => 'Active'], null, ['class' => 'form-control', 'placeholder' => 'Type Status']) !!}
 
@@ -56,7 +61,7 @@
 
         <div class='form-group col-xs-5'>
 
-            {!! Form::label('role', 'Role') !!}
+            {!! Form::label('role_id', 'Role') !!}
 
             {!! Form::select('role_id', $roles, null, ['class' => 'form-control', 'placeholder' => 'Type Role']) !!}
 
@@ -70,7 +75,7 @@
         <div class='form-group col-xs-5'>
 
 
-            {!! Form::label('Password', 'password'); !!}
+            {!! Form::label('password', 'password'); !!}
             {!! Form::password('password', ['class' => 'form-control', 'placeholder' => 'Type Password']) !!}
 
         </div>
@@ -84,17 +89,4 @@
     </div>
 
     {!! Form::close() !!}
-
-    @if(count($errors) > 0)
-        <ul>
-            <div class="alert alert-danger">
-                @foreach($errors->all() as $error)
-                    <li>{{$error}}</li>
-                @endforeach
-            </div>
-        </ul>
-    @endif
-
-
-
 @stop
