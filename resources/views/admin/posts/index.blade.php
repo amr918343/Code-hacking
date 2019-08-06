@@ -22,9 +22,9 @@
                 <td><a href="{{route('admin.posts.edit', $post->id)}}">{{$post->title}}</a></td>
                 <td>{{$post->body}}</td>
                 <td>{{$post->user->name}}</td>
-                <td>{{$post->category_id}}</td>
+                <td>{{$post->category ? $post->category->name : 'Un Categorized'}}</td>
 
-                <td><img height="40" src="{{isset($post->photo->path) ? $post->photo->path : 'http://placehold.it/50x50'}}" alt="User Photo"></td>
+                <td><img height="50" width="50" src="{{isset($post->photo->path) ? $post->photo->path : 'http://placehold.it/50x50'}}" alt="User Photo"></td>
 
                 <td>{{$post->created_at->diffForHumans()}}</td>
                 <td>{{$post->updated_at->diffForHumans()}}</td>

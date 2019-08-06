@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Photo;
 use Illuminate\Http\Request;
 use App\Post;
@@ -31,8 +32,8 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
-
-        return view('admin.posts.create');
+        $categories = Category::lists('name', 'id')->all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -45,7 +46,7 @@ class AdminPostsController extends Controller
     {
         // Validate errors
         $this->validate($request, [
-//            'category_id' => 'required',
+            'category_id' => 'required',
             'photo_id' => 'required',
             'title' => 'required',
             'body' => 'required',

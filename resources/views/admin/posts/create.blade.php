@@ -19,7 +19,7 @@
 
             {!! Form::label('category_id', 'Category') !!}
 
-            {!! Form::select('category_id', [0 => 'Idle', 1 => 'Active'], null, ['class' => 'form-control', 'placeholder' => 'Type Category']) !!}
+            {!! Form::select('category_id', $categories, null, ['class' => 'form-control', 'placeholder' => 'Type Category']) !!}
 
         </div>
 
